@@ -82,7 +82,11 @@ class _CalcScreenState extends State<CalcScreen> {
                     text: keys[index],
                     keyColor: getKeyColor(index),
                     textColor: getTextColor(index),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        question += keys[index];
+                      });
+                    },
                   ),
                   physics: const NeverScrollableScrollPhysics(),
                 ),
@@ -92,5 +96,25 @@ class _CalcScreenState extends State<CalcScreen> {
         ],
       ),
     );
+  }
+}
+
+Color getKeyColor(int index) {
+  if (index == 0) {
+    return Colors.indigo.shade900;
+  } else {
+    return Colors.indigo.shade100.withOpacity(0.25);
+  }
+}
+
+Color getTextColor(int index) {
+  if (index == 0) {
+    return Colors.indigo.shade100;
+  } else if (index < 3) {
+    return Colors.indigo.shade900;
+  } else if ((index + 1) % 4 == 0) {
+    return Colors.indigo.shade900;
+  } else {
+    return Colors.black54;
   }
 }
