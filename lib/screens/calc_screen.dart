@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/keyboard.dart';
+import '../widgets/num_key.dart';
 
 class CalcScreen extends StatefulWidget {
   const CalcScreen({super.key});
@@ -71,11 +72,19 @@ class _CalcScreenState extends State<CalcScreen> {
               color: Colors.grey.shade100,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Keyboard(
-                  keys: keys,
-                  onKeyTap: () {
-                    print('it is a fucking number');
-                  },
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    mainAxisExtent: 80,
+                  ),
+                  itemCount: keys.length,
+                  itemBuilder: (context, index) => NumKey(
+                    text: keys[index],
+                    keyColor: getKeyColor(index),
+                    textColor: getTextColor(index),
+                    onTap: () {},
+                  ),
+                  physics: const NeverScrollableScrollPhysics(),
                 ),
               ),
             ),
