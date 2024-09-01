@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/keyboard.dart';
 import '../widgets/num_key.dart';
 
 class CalcScreen extends StatefulWidget {
@@ -35,7 +34,8 @@ class _CalcScreenState extends State<CalcScreen> {
   ];
 
   var question = '';
-  var answer = '';
+  var submitted = '';
+  var answer = 'ans';
 
   @override
   Widget build(BuildContext context) {
@@ -46,32 +46,65 @@ class _CalcScreenState extends State<CalcScreen> {
           Expanded(
             flex: 3,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 18,
+              ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  // SUBMITTED PARTS
+                  const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(question),
+                      Text(
+                        submitted,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
                     ],
                   ),
+
+                  // CURRENT QUESTION
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        question,
+                        style: TextStyle(
+                          fontSize: 36,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  //ANSWER
+                  const SizedBox(height: 28),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(answer),
+                      Text(
+                        answer,
+                        style: const TextStyle(fontSize: 48),
+                      ),
                     ],
                   ),
                 ],
               ),
             ),
           ),
+
+          // KEYBOARD
           Expanded(
             flex: 5,
             child: Container(
               color: Colors.grey.shade100,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
@@ -83,9 +116,7 @@ class _CalcScreenState extends State<CalcScreen> {
                     keyColor: getKeyColor(index),
                     textColor: getTextColor(index),
                     onTap: () {
-                      setState(() {
-                        question += keys[index];
-                      });
+                      onKeyTap(index);
                     },
                   ),
                   physics: const NeverScrollableScrollPhysics(),
@@ -96,6 +127,44 @@ class _CalcScreenState extends State<CalcScreen> {
         ],
       ),
     );
+  }
+
+  void onKeyTap(int index) {
+    setState(() {
+      if (index == 0) {
+        // =
+      } else if (index == 1) {
+        // C
+        if (question.isNotEmpty) {
+          question = '';
+        } else if (question.isEmpty && submitted.isNotEmpty) {
+          submitted = '';
+        }
+      } else if (index == 2) {
+        // DEL
+        if (question.isNotEmpty) {
+          question = question.substring(0, question.length - 1);
+        }
+      } else if (index == 3) {
+        // %
+        question = double.parse('${double.parse(question) / 100}')
+            .toStringAsFixed(question.length);
+      } else if ((index + 1) % 4 == 0) {
+        // Operators
+        if (question.isNotEmpty) {
+          submitted += ('$question ${keys[index]} ');
+          question = '';
+        }
+      } else if (index == 18) {
+        // .
+        if (!question.contains('.')) {
+          question += keys[index];
+        }
+      } else {
+        // Numbers
+        question += keys[index];
+      }
+    });
   }
 }
 
