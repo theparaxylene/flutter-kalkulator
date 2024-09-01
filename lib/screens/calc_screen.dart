@@ -47,7 +47,7 @@ class _CalcScreenState extends State<CalcScreen> {
             flex: 3,
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 10,
+                horizontal: 14,
                 vertical: 18,
               ),
               child: Column(
@@ -98,29 +98,35 @@ class _CalcScreenState extends State<CalcScreen> {
             ),
           ),
 
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Container(
+              color: Colors.black12,
+              width: double.infinity,
+              height: 1,
+            ),
+          ),
+
           // KEYBOARD
           Expanded(
             flex: 5,
-            child: Container(
-              color: Colors.grey.shade100,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    mainAxisExtent: 80,
-                  ),
-                  itemCount: keys.length,
-                  itemBuilder: (context, index) => NumKey(
-                    text: keys[index],
-                    keyColor: getKeyColor(index),
-                    textColor: getTextColor(index),
-                    onTap: () {
-                      onKeyTap(index);
-                    },
-                  ),
-                  physics: const NeverScrollableScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisExtent: 80,
                 ),
+                itemCount: keys.length,
+                itemBuilder: (context, index) => NumKey(
+                  text: keys[index],
+                  keyColor: getKeyColor(index),
+                  textColor: getTextColor(index),
+                  onTap: () {
+                    onKeyTap(index);
+                  },
+                ),
+                physics: const NeverScrollableScrollPhysics(),
               ),
             ),
           ),
