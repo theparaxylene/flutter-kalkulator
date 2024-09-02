@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 import '../widgets/num_key.dart';
 
@@ -35,7 +36,7 @@ class _CalcScreenState extends State<CalcScreen> {
 
   var question = '';
   var submitted = '';
-  var answer = 'ans';
+  var answer = '';
 
   @override
   Widget build(BuildContext context) {
@@ -135,17 +136,37 @@ class _CalcScreenState extends State<CalcScreen> {
     );
   }
 
+  void solve() {
+    var finalQuestion = submitted + question;
+
+    if (finalQuestion.isNotEmpty) {
+      finalQuestion = finalQuestion.replaceAll('×', '*');
+      finalQuestion = finalQuestion.replaceAll('÷', '/');
+
+      Parser p = Parser();
+      Expression exp = p.parse(finalQuestion);
+      ContextModel cm = ContextModel();
+
+      double eval = exp.evaluate(EvaluationType.REAL, cm);
+
+      print(eval);
+
+      answer = eval.toString();
+
+      submitted += question;
+      question = double.parse(answer).toStringAsFixed(0);
+    }
+  }
+
   void onKeyTap(int index) {
     setState(() {
       if (index == 0) {
-        // =
+        solve();
       } else if (index == 1) {
         // C
-        if (question.isNotEmpty) {
-          question = '';
-        } else if (question.isEmpty && submitted.isNotEmpty) {
-          submitted = '';
-        }
+        answer = '';
+        question = '';
+        submitted = '';
       } else if (index == 2) {
         // DEL
         if (question.isNotEmpty) {
