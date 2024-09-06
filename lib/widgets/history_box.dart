@@ -11,7 +11,7 @@ class HistoryBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 64,
+      height: 48,
       width: double.infinity,
       child: ListView.builder(
         itemCount: solved.length,
@@ -19,11 +19,11 @@ class HistoryBox extends StatelessWidget {
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
-            vertical: 6,
+            vertical: 8,
           ),
           child: Text(
             solved[index],
-            style: const TextStyle(fontSize: 14, color: Colors.black38),
+            style: const TextStyle(fontSize: 20, color: Colors.black38),
           ),
         ),
       ),

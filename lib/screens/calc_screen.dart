@@ -35,14 +35,10 @@ class _CalcScreenState extends State<CalcScreen> {
     '+',
   ];
 
-  final questionHistory = [
-    'adfdas',
-    'fadsfads',
-    'dasf',
-    'adsfs',
-  ];
   var question = '';
+  var submitted = '';
   var answer = '';
+  final List<String> questionHistory = [];
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +58,7 @@ class _CalcScreenState extends State<CalcScreen> {
                   children: [
                     // QUESTION HISTORY
                     HistoryBox(
-                      solved: questionHistory,
+                      solved: questionHistory.reversed.toList(),
                     ),
 
                     // QUESTION
@@ -75,7 +71,7 @@ class _CalcScreenState extends State<CalcScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              question,
+                              submitted + question,
                               // 'question',
                               style: TextStyle(
                                 fontSize: 36,
@@ -154,7 +150,7 @@ class _CalcScreenState extends State<CalcScreen> {
   }
 
   void solve() {
-    var finalQuestion = question;
+    var finalQuestion = submitted + question;
 
     if (finalQuestion.isNotEmpty) {
       finalQuestion = finalQuestion.replaceAll('×', '*');
@@ -166,9 +162,17 @@ class _CalcScreenState extends State<CalcScreen> {
 
       double eval = exp.evaluate(EvaluationType.REAL, cm);
 
-      answer = eval.toString();
+      // to check if eval has decimals
+      if (eval % 1 == 0) {
+        answer = eval.toStringAsFixed(0);
+      } else {
+        answer = eval.toString();
+      }
 
-      question = double.parse(answer).toStringAsFixed(0);
+      // prevent from adding duplicates
+      if (!questionHistory.contains('$submitted$question = $answer')) {
+        questionHistory.add('$submitted$question = $answer');
+      }
     }
   }
 
@@ -181,8 +185,9 @@ class _CalcScreenState extends State<CalcScreen> {
 
       // C
       else if (index == 1) {
-        answer = '';
         question = '';
+        submitted = '';
+        answer = '';
       }
 
       // DEL
@@ -201,7 +206,8 @@ class _CalcScreenState extends State<CalcScreen> {
       // Operators
       else if ((index + 1) % 4 == 0) {
         if (question.isNotEmpty) {
-          question += (' ${keys[index]} $question ');
+          submitted += '$question ${keys[index]} ';
+          question = '';
         }
       }
 
