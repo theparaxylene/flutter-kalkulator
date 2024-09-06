@@ -35,7 +35,12 @@ class _CalcScreenState extends State<CalcScreen> {
     '+',
   ];
 
-  final questionHistory = [];
+  final questionHistory = [
+    'adfdas',
+    'fadsfads',
+    'dasf',
+    'adsfs',
+  ];
   var question = '';
   var answer = '';
 
@@ -56,19 +61,8 @@ class _CalcScreenState extends State<CalcScreen> {
                 child: Column(
                   children: [
                     // QUESTION HISTORY
-                    const HistoryBox(
-                      solved: [
-                        'solved',
-                        'solved',
-                        'solved',
-                        'solved',
-                        'solved',
-                        'solved',
-                        'solved',
-                        'solved',
-                        'solved',
-                        'solved',
-                      ],
+                    HistoryBox(
+                      solved: questionHistory,
                     ),
 
                     // QUESTION

@@ -16,9 +16,15 @@ class HistoryBox extends StatelessWidget {
       child: ListView.builder(
         itemCount: solved.length,
         reverse: true,
-        itemBuilder: (context, index) => Container(
-          color: Colors.pinkAccent,
-          child: Text(solved[index]),
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 6,
+          ),
+          child: Text(
+            solved[index],
+            style: const TextStyle(fontSize: 14, color: Colors.black38),
+          ),
         ),
       ),
     );
