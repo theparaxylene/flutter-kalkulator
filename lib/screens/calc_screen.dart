@@ -73,36 +73,43 @@ class _CalcScreenState extends State<CalcScreen> {
 
                     // QUESTION
                     // const SizedBox(height: 20),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            question,
-                            // 'question',
-                            style: TextStyle(
-                              fontSize: 36,
-                              color: Colors.grey.shade700,
+                    SizedBox(
+                      width: double.infinity,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              question,
+                              // 'question',
+                              style: TextStyle(
+                                fontSize: 36,
+                                color: Colors.grey.shade700,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
 
                     //ANSWER
                     const SizedBox(height: 28),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            // 'answer',
-                            answer,
-                            style: const TextStyle(fontSize: 48),
-                          ),
-                        ],
+                    SizedBox(
+                      width: double.infinity,
+                      child: SingleChildScrollView(
+                        reverse: true,
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              // 'answer',
+                              answer,
+                              style: const TextStyle(fontSize: 48),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
