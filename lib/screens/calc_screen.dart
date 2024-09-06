@@ -34,110 +34,116 @@ class _CalcScreenState extends State<CalcScreen> {
     '+',
   ];
 
+  final questionHistory = [];
   var question = '';
-  var submitted = '';
   var answer = '';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Padding(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 10,
+                ),
+                child: Column(
+                  children: [
+                    // QUESTION HISTORY
+                    Container(
+                      height: 64,
+                      width: double.infinity,
+                      color: Colors.blueGrey,
+                    ),
+
+                    // QUESTION
+                    // const SizedBox(height: 20),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            question,
+                            // 'question',
+                            style: TextStyle(
+                              fontSize: 36,
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    //ANSWER
+                    const SizedBox(height: 28),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            // 'answer',
+                            answer,
+                            style: const TextStyle(fontSize: 48),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // DIVIDER
+            Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 18,
+                horizontal: 24,
+                vertical: 10,
               ),
-              child: Column(
-                children: [
-                  // SUBMITTED PARTS
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        submitted,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey.shade400,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  // CURRENT QUESTION
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        question,
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  //ANSWER
-                  const SizedBox(height: 28),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        answer,
-                        style: const TextStyle(fontSize: 48),
-                      ),
-                    ],
-                  ),
-                ],
+              child: Container(
+                color: Colors.black12,
+                width: double.infinity,
+                height: 2,
               ),
             ),
-          ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Container(
-              color: Colors.black12,
-              width: double.infinity,
-              height: 1,
-            ),
-          ),
-
-          // KEYBOARD
-          Expanded(
-            flex: 5,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  mainAxisExtent: 80,
+            // KEYBOARD
+            Expanded(
+              flex: 5,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    mainAxisExtent: 80,
+                  ),
+                  itemCount: keys.length,
+                  itemBuilder: (context, index) => NumKey(
+                    text: keys[index],
+                    keyColor: getKeyColor(index),
+                    textColor: getTextColor(index),
+                    onTap: () {
+                      onKeyTap(index);
+                    },
+                  ),
+                  physics: const NeverScrollableScrollPhysics(),
                 ),
-                itemCount: keys.length,
-                itemBuilder: (context, index) => NumKey(
-                  text: keys[index],
-                  keyColor: getKeyColor(index),
-                  textColor: getTextColor(index),
-                  onTap: () {
-                    onKeyTap(index);
-                  },
-                ),
-                physics: const NeverScrollableScrollPhysics(),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   void solve() {
-    var finalQuestion = submitted + question;
+    var finalQuestion = question;
 
     if (finalQuestion.isNotEmpty) {
       finalQuestion = finalQuestion.replaceAll('×', '*');
@@ -149,46 +155,54 @@ class _CalcScreenState extends State<CalcScreen> {
 
       double eval = exp.evaluate(EvaluationType.REAL, cm);
 
-      print(eval);
-
       answer = eval.toString();
 
-      submitted += question;
       question = double.parse(answer).toStringAsFixed(0);
     }
   }
 
   void onKeyTap(int index) {
     setState(() {
+      // =
       if (index == 0) {
         solve();
-      } else if (index == 1) {
-        // C
+      }
+
+      // C
+      else if (index == 1) {
         answer = '';
         question = '';
-        submitted = '';
-      } else if (index == 2) {
-        // DEL
+      }
+
+      // DEL
+      else if (index == 2) {
         if (question.isNotEmpty) {
           question = question.substring(0, question.length - 1);
         }
-      } else if (index == 3) {
-        // %
+      }
+
+      // %
+      else if (index == 3) {
         question = double.parse('${double.parse(question) / 100}')
             .toStringAsFixed(question.length);
-      } else if ((index + 1) % 4 == 0) {
-        // Operators
+      }
+
+      // Operators
+      else if ((index + 1) % 4 == 0) {
         if (question.isNotEmpty) {
-          submitted += ('$question ${keys[index]} ');
-          question = '';
+          question += (' ${keys[index]} $question ');
         }
-      } else if (index == 18) {
-        // .
+      }
+
+      // .
+      else if (index == 18) {
         if (!question.contains('.')) {
           question += keys[index];
         }
-      } else {
-        // Numbers
+      }
+
+      // Numbers
+      else {
         question += keys[index];
       }
     });
