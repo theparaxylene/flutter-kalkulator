@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 
+import '../widgets/history_box.dart';
 import '../widgets/num_key.dart';
 
 class CalcScreen extends StatefulWidget {
@@ -55,10 +56,19 @@ class _CalcScreenState extends State<CalcScreen> {
                 child: Column(
                   children: [
                     // QUESTION HISTORY
-                    Container(
-                      height: 64,
-                      width: double.infinity,
-                      color: Colors.blueGrey,
+                    const HistoryBox(
+                      solved: [
+                        'solved',
+                        'solved',
+                        'solved',
+                        'solved',
+                        'solved',
+                        'solved',
+                        'solved',
+                        'solved',
+                        'solved',
+                        'solved',
+                      ],
                     ),
 
                     // QUESTION

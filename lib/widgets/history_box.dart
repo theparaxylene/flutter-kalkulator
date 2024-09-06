@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 
 class HistoryBox extends StatelessWidget {
-  const HistoryBox({super.key});
+  final List<String> solved;
+
+  const HistoryBox({
+    super.key,
+    required this.solved,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 300,
+    return SizedBox(
+      height: 64,
       width: double.infinity,
-      child: SingleChildScrollView(
-        child: Column(),
+      child: ListView.builder(
+        itemCount: solved.length,
+        reverse: true,
+        itemBuilder: (context, index) => Container(
+          color: Colors.pinkAccent,
+          child: Text(solved[index]),
+        ),
       ),
     );
   }
