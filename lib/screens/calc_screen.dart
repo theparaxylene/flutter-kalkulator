@@ -57,8 +57,16 @@ class _CalcScreenState extends State<CalcScreen> {
                 child: Column(
                   children: [
                     // QUESTION HISTORY
-                    HistoryBox(
-                      solved: questionHistory.reversed.toList(),
+                    Row(
+                      children: [
+                        HistoryBox(
+                          solved: questionHistory.reversed.toList(),
+                        ),
+                        const TextButton(
+                          onPressed: null,
+                          child: Text('Expand'),
+                        ),
+                      ],
                     ),
 
                     // QUESTION
