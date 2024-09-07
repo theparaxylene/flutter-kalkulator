@@ -3,6 +3,7 @@ import 'package:math_expressions/math_expressions.dart';
 
 import '../widgets/history_box.dart';
 import '../widgets/num_key.dart';
+import 'history_screen.dart';
 
 class CalcScreen extends StatefulWidget {
   const CalcScreen({super.key});
@@ -57,16 +58,36 @@ class _CalcScreenState extends State<CalcScreen> {
                 child: Column(
                   children: [
                     // QUESTION HISTORY
-                    Row(
-                      children: [
-                        HistoryBox(
-                          solved: questionHistory.reversed.toList(),
-                        ),
-                        const TextButton(
-                          onPressed: null,
-                          child: Text('Expand'),
-                        ),
-                      ],
+                    SizedBox(
+                      height: 72,
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: HistoryBox(
+                              solved: questionHistory.reversed.toList(),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: questionHistory.isNotEmpty
+                                ? TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HistoryScreen(
+                                              solvedQuestions: questionHistory),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text('Expand'),
+                                  )
+                                : const SizedBox(),
+                          ),
+                        ],
+                      ),
                     ),
 
                     // QUESTION
