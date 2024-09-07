@@ -64,13 +64,13 @@ class _CalcScreenState extends State<CalcScreen> {
                       child: Row(
                         children: [
                           Expanded(
-                            flex: 4,
+                            flex: 8,
                             child: HistoryBox(
                               solved: questionHistory.reversed.toList(),
                             ),
                           ),
                           Expanded(
-                            flex: 1,
+                            flex: 3,
                             child: questionHistory.isNotEmpty
                                 ? TextButton(
                                     onPressed: () {
@@ -78,11 +78,19 @@ class _CalcScreenState extends State<CalcScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => HistoryScreen(
-                                              solvedQuestions: questionHistory),
+                                            solvedQuestions: questionHistory,
+                                          ),
                                         ),
                                       );
                                     },
-                                    child: const Text('Expand'),
+                                    child: Text(
+                                      'EXPAND',
+                                      style: TextStyle(
+                                        color: Colors.indigo.shade900,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
                                   )
                                 : const SizedBox(),
                           ),

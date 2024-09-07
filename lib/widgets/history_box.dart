@@ -18,7 +18,7 @@ class HistoryBox extends StatelessWidget {
         reverse: true,
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 16,
+            horizontal: 14,
             vertical: 8,
           ),
           child: SingleChildScrollView(
