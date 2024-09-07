@@ -204,6 +204,16 @@ class _CalcScreenState extends State<CalcScreen> {
         answer = eval.toStringAsFixed(0);
       } else {
         answer = eval.toString();
+        // to check if has recurring decimals
+        if (answer.split('.')[1].length > 6) {
+          if (answer.split('.')[1].substring(0, 3) ==
+              answer.split('.')[1].substring(3, 6)) {
+            answer = eval.toStringAsFixed(3);
+          }
+        }
+        if (answer.split('.')[1].length > 9) {
+          answer = eval.toStringAsFixed(10);
+        }
       }
 
       // prevent from adding duplicates
