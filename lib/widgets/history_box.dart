@@ -21,9 +21,16 @@ class HistoryBox extends StatelessWidget {
             horizontal: 16,
             vertical: 8,
           ),
-          child: Text(
-            solved[index],
-            style: const TextStyle(fontSize: 20, color: Colors.black38),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Text(
+                  solved[index],
+                  style: const TextStyle(fontSize: 20, color: Colors.black38),
+                ),
+              ],
+            ),
           ),
         ),
       ),
