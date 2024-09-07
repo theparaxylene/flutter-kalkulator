@@ -199,6 +199,11 @@ class _CalcScreenState extends State<CalcScreen> {
 
       // %
       else if (index == 3) {
+        if (answer.isNotEmpty) {
+          question = answer;
+          answer = '';
+          submitted = '';
+        }
         question = double.parse('${double.parse(question) / 100}')
             .toStringAsFixed(question.length);
       }
@@ -206,6 +211,11 @@ class _CalcScreenState extends State<CalcScreen> {
       // Operators
       else if ((index + 1) % 4 == 0) {
         if (question.isNotEmpty) {
+          if (answer.isNotEmpty) {
+            submitted = answer;
+            answer = '';
+            question = '';
+          }
           submitted += '$question ${keys[index]} ';
           question = '';
         }
@@ -213,13 +223,26 @@ class _CalcScreenState extends State<CalcScreen> {
 
       // .
       else if (index == 18) {
+        if (answer.isNotEmpty) {
+          answer = '';
+          question = '';
+          submitted = '';
+        }
         if (!question.contains('.')) {
+          if (question.isEmpty) {
+            question += '0';
+          }
           question += keys[index];
         }
       }
 
       // Numbers
       else {
+        if (answer.isNotEmpty) {
+          question = '';
+          answer = '';
+          submitted = '';
+        }
         question += keys[index];
       }
     });
