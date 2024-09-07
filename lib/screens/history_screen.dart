@@ -15,7 +15,23 @@ class HistoryScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: ListView.builder(
           itemCount: solvedQuestions.length,
-          itemBuilder: (context, index) => Text(solvedQuestions[index]),
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Text(
+                    solvedQuestions[index],
+                    style: const TextStyle(fontSize: 32),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
