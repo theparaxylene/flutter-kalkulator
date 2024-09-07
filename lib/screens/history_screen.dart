@@ -40,16 +40,16 @@ class HistoryScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'title',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
+                  // const Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     Text(
+                  //       'title',
+                  //       style: TextStyle(fontSize: 18),
+                  //     ),
+                  //   ],
+                  // ),
+                  // const SizedBox(height: 8),
                   SizedBox(
                     width: double.infinity,
                     child: SingleChildScrollView(
