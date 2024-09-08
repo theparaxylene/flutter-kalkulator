@@ -14,26 +14,26 @@ class CalcScreen extends StatefulWidget {
 
 class _CalcScreenState extends State<CalcScreen> {
   final keys = [
-    '=',
+    'SC',
     'C',
     'DEL',
-    '%',
+    '÷',
     '7',
     '8',
     '9',
-    '÷',
+    '×',
     '4',
     '5',
     '6',
-    '×',
+    '-',
     '1',
     '2',
     '3',
-    '-',
+    '+',
     '0',
     '00',
     '.',
-    '+',
+    '=',
   ];
 
   var question = '';
@@ -242,8 +242,13 @@ class _CalcScreenState extends State<CalcScreen> {
 
   void onKeyTap(int index) {
     setState(() {
-      // =
+      // SCIENTIFIC
       if (index == 0) {
+        // change to scientific keyboard
+      }
+
+      // =
+      else if (index == 19) {
         solve();
       }
 
@@ -267,15 +272,15 @@ class _CalcScreenState extends State<CalcScreen> {
       }
 
       // %
-      else if (index == 3) {
-        if (answer.isNotEmpty) {
-          question = answer;
-          answer = '';
-          submitted = '';
-        }
-        question = double.parse('${double.parse(question) / 100}')
-            .toStringAsFixed(question.length);
-      }
+      // else if (index == 3) {
+      //   if (answer.isNotEmpty) {
+      //     question = answer;
+      //     answer = '';
+      //     submitted = '';
+      //   }
+      //   question = double.parse('${double.parse(question) / 100}')
+      //       .toStringAsFixed(question.length);
+      // }
 
       // Operators
       else if ((index + 1) % 4 == 0) {
