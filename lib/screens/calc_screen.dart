@@ -3,6 +3,7 @@ import 'package:math_expressions/math_expressions.dart';
 
 import '../widgets/history_box.dart';
 import '../widgets/num_key.dart';
+import 'history_screen.dart';
 
 class CalcScreen extends StatefulWidget {
   const CalcScreen({super.key});
@@ -57,8 +58,44 @@ class _CalcScreenState extends State<CalcScreen> {
                 child: Column(
                   children: [
                     // QUESTION HISTORY
-                    HistoryBox(
-                      solved: questionHistory.reversed.toList(),
+                    SizedBox(
+                      height: 72,
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 8,
+                            child: HistoryBox(
+                              solved: questionHistory.reversed.toList(),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: questionHistory.isNotEmpty
+                                ? TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HistoryScreen(
+                                            solvedQuestions: questionHistory,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'EXPAND',
+                                      style: TextStyle(
+                                        color: Colors.indigo.shade900,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                          ),
+                        ],
+                      ),
                     ),
 
                     // QUESTION
@@ -167,6 +204,16 @@ class _CalcScreenState extends State<CalcScreen> {
         answer = eval.toStringAsFixed(0);
       } else {
         answer = eval.toString();
+        // to check if has recurring decimals
+        if (answer.split('.')[1].length > 6) {
+          if (answer.split('.')[1].substring(0, 3) ==
+              answer.split('.')[1].substring(3, 6)) {
+            answer = eval.toStringAsFixed(3);
+          }
+        }
+        if (answer.split('.')[1].length > 9) {
+          answer = eval.toStringAsFixed(10);
+        }
       }
 
       // prevent from adding duplicates

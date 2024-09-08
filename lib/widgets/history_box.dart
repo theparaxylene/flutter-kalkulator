@@ -18,12 +18,19 @@ class HistoryBox extends StatelessWidget {
         reverse: true,
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 16,
+            horizontal: 14,
             vertical: 8,
           ),
-          child: Text(
-            solved[index],
-            style: const TextStyle(fontSize: 20, color: Colors.black38),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Text(
+                  solved[index],
+                  style: const TextStyle(fontSize: 20, color: Colors.black38),
+                ),
+              ],
+            ),
           ),
         ),
       ),
