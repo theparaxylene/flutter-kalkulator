@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:intl/intl.dart';
 
 import '../widgets/num_key.dart';
 
@@ -96,9 +97,13 @@ class _CalcScreenState extends State<CalcScreen> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                answer.isNotEmpty ? '= $answer' : answer,
+                                answer.isNotEmpty
+                                    ? '= ${NumberFormat.decimalPattern().format(double.parse(answer))}'
+                                    : answer,
                                 style: const TextStyle(
-                                    fontSize: 64, fontWeight: FontWeight.bold),
+                                  fontSize: 64,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ],
                           ),
