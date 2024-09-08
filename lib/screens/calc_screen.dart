@@ -258,6 +258,11 @@ class _CalcScreenState extends State<CalcScreen> {
       else if (index == 2) {
         if (question.isNotEmpty) {
           question = question.substring(0, question.length - 1);
+        } else {
+          submitted = submitted.trim();
+          if (submitted.isNotEmpty) {
+            submitted = submitted.substring(0, submitted.length - 1);
+          }
         }
       }
 
