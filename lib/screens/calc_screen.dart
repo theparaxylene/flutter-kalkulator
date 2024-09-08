@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 
-import '../widgets/history_box.dart';
 import '../widgets/num_key.dart';
-import 'history_screen.dart';
 
 class CalcScreen extends StatefulWidget {
   const CalcScreen({super.key});
@@ -39,7 +37,6 @@ class _CalcScreenState extends State<CalcScreen> {
   var question = '';
   var submitted = '';
   var answer = '';
-  final List<String> questionHistory = [];
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +53,17 @@ class _CalcScreenState extends State<CalcScreen> {
                   vertical: 10,
                 ),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: Colors.blueGrey.shade50,
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      // QUESTION HISTORY
-                      getQuestionHistory(context),
-
                       // QUESTION
                       SizedBox(
                         width: double.infinity,
@@ -98,8 +96,9 @@ class _CalcScreenState extends State<CalcScreen> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                answer,
-                                style: const TextStyle(fontSize: 48),
+                                answer.isNotEmpty ? '= $answer' : answer,
+                                style: const TextStyle(
+                                    fontSize: 64, fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
@@ -161,48 +160,6 @@ class _CalcScreenState extends State<CalcScreen> {
     );
   }
 
-  SizedBox getQuestionHistory(BuildContext context) {
-    return SizedBox(
-      height: 72,
-      width: double.infinity,
-      child: Row(
-        children: [
-          Expanded(
-            flex: 8,
-            child: HistoryBox(
-              solved: questionHistory.reversed.toList(),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: questionHistory.isNotEmpty
-                ? TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HistoryScreen(
-                            solvedQuestions: questionHistory,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'EXPAND',
-                      style: TextStyle(
-                        color: Colors.indigo.shade900,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                  )
-                : const SizedBox(),
-          ),
-        ],
-      ),
-    );
-  }
-
   void solve() {
     var finalQuestion = submitted + question;
 
@@ -220,7 +177,7 @@ class _CalcScreenState extends State<CalcScreen> {
       if (eval % 1 == 0) {
         answer = eval.toStringAsFixed(0);
       } else {
-        answer = eval.toString();
+        answer = '$eval';
         // to check if has recurring decimals
         if (answer.split('.')[1].length > 6) {
           if (answer.split('.')[1].substring(0, 3) ==
@@ -231,11 +188,6 @@ class _CalcScreenState extends State<CalcScreen> {
         if (answer.split('.')[1].length > 9) {
           answer = eval.toStringAsFixed(10);
         }
-      }
-
-      // prevent from adding duplicates
-      if (!questionHistory.contains('$submitted$question = $answer')) {
-        questionHistory.add('$submitted$question = $answer');
       }
     }
   }
