@@ -27,14 +27,19 @@ class NumKey extends StatelessWidget {
             borderRadius: BorderRadius.circular(18),
           ),
           child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 24,
-                color: textColor,
-              ),
-              textAlign: TextAlign.center,
-            ),
+            child: text.contains('assets/')
+                ? Image.asset(
+                    text,
+                    color: textColor,
+                  )
+                : Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: textColor,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
           ),
         ),
       ),
