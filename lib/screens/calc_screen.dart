@@ -55,133 +55,150 @@ class _CalcScreenState extends State<CalcScreen> {
                   horizontal: 14,
                   vertical: 10,
                 ),
-                child: Column(
-                  children: [
-                    // QUESTION HISTORY
-                    SizedBox(
-                      height: 72,
-                      width: double.infinity,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 8,
-                            child: HistoryBox(
-                              solved: questionHistory.reversed.toList(),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: questionHistory.isNotEmpty
-                                ? TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => HistoryScreen(
-                                            solvedQuestions: questionHistory,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      'EXPAND',
-                                      style: TextStyle(
-                                        color: Colors.indigo.shade900,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  )
-                                : const SizedBox(),
-                          ),
-                        ],
-                      ),
-                    ),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.blueGrey.shade50,
+                  ),
+                  child: Column(
+                    children: [
+                      // QUESTION HISTORY
+                      getQuestionHistory(context),
 
-                    // QUESTION
-                    // const SizedBox(height: 20),
-                    SizedBox(
-                      width: double.infinity,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              submitted + question,
-                              // 'question',
-                              style: TextStyle(
-                                fontSize: 36,
-                                color: Colors.grey.shade700,
+                      // QUESTION
+                      SizedBox(
+                        width: double.infinity,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                submitted + question,
+                                // 'question',
+                                style: TextStyle(
+                                  fontSize: 36,
+                                  color: Colors.grey.shade700,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
 
-                    //ANSWER
-                    const SizedBox(height: 28),
-                    SizedBox(
-                      width: double.infinity,
-                      child: SingleChildScrollView(
-                        reverse: true,
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              // 'answer',
-                              answer,
-                              style: const TextStyle(fontSize: 48),
-                            ),
-                          ],
+                      //ANSWER
+                      const SizedBox(height: 28),
+                      SizedBox(
+                        width: double.infinity,
+                        child: SingleChildScrollView(
+                          reverse: true,
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                answer,
+                                style: const TextStyle(fontSize: 48),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
 
             // DIVIDER
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: 10,
-              ),
-              child: Container(
-                color: Colors.black12,
-                width: double.infinity,
-                height: 2,
-              ),
-            ),
+            // getDivider(),
 
             // KEYBOARD
             Expanded(
               flex: 5,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    mainAxisExtent: 80,
-                  ),
-                  itemCount: keys.length,
-                  itemBuilder: (context, index) => NumKey(
-                    text: keys[index],
-                    keyColor: getKeyColor(index),
-                    textColor: getTextColor(index),
-                    onTap: () {
-                      onKeyTap(index);
-                    },
-                  ),
-                  physics: const NeverScrollableScrollPhysics(),
-                ),
+                child: getKeyboard(),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  GridView getKeyboard() {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        mainAxisExtent: 80,
+      ),
+      itemCount: keys.length,
+      itemBuilder: (context, index) => NumKey(
+        text: keys[index],
+        keyColor: getKeyColor(index),
+        textColor: getTextColor(index),
+        onTap: () {
+          onKeyTap(index);
+        },
+      ),
+      physics: const NeverScrollableScrollPhysics(),
+    );
+  }
+
+  Padding getDivider() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 24,
+        vertical: 10,
+      ),
+      child: Container(
+        color: Colors.black12,
+        width: double.infinity,
+        height: 2,
+      ),
+    );
+  }
+
+  SizedBox getQuestionHistory(BuildContext context) {
+    return SizedBox(
+      height: 72,
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 8,
+            child: HistoryBox(
+              solved: questionHistory.reversed.toList(),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: questionHistory.isNotEmpty
+                ? TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HistoryScreen(
+                            solvedQuestions: questionHistory,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'EXPAND',
+                      style: TextStyle(
+                        color: Colors.indigo.shade900,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+          ),
+        ],
       ),
     );
   }
