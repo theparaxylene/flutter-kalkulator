@@ -27,9 +27,9 @@ class NumKey extends StatelessWidget {
             borderRadius: BorderRadius.circular(18),
           ),
           child: Center(
-            child: text.contains('assets/')
-                ? Image.asset(
-                    text,
+            child: text == 'DEL'
+                ? Icon(
+                    Icons.backspace_outlined,
                     color: textColor,
                   )
                 : Text(

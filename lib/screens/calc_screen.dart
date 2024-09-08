@@ -16,7 +16,7 @@ class _CalcScreenState extends State<CalcScreen> {
   final keys = [
     '=',
     'C',
-    'assets/imgs/backspace.png',
+    'DEL',
     '%',
     '7',
     '8',
