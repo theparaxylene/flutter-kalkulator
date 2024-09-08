@@ -325,7 +325,7 @@ Color getTextColor(int index) {
   if (index == 0) {
     return Colors.indigo.shade100;
   } else if (index < 3) {
-    return Colors.indigo.shade900;
+    return Colors.red.shade400;
   } else if ((index + 1) % 4 == 0) {
     return Colors.indigo.shade900;
   } else {
