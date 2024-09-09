@@ -54,66 +54,56 @@ class _CalcScreenState extends State<CalcScreen> {
                   horizontal: 14,
                   vertical: 10,
                 ),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.teal.shade50.withOpacity(0.2),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // QUESTION
-                      SizedBox(
-                        width: double.infinity,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                submitted + question,
-                                // 'question',
-                                style: GoogleFonts.archivo(
-                                  fontSize: 36,
-                                  color: Colors.grey.shade700,
-                                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // QUESTION
+                    SizedBox(
+                      width: double.infinity,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              submitted + question,
+                              // 'question',
+                              style: GoogleFonts.archivo(
+                                fontSize: 36,
+                                color: Colors.grey.shade700,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
+                    ),
 
-                      //ANSWER
-                      const SizedBox(height: 28),
-                      SizedBox(
-                        width: double.infinity,
-                        child: SingleChildScrollView(
-                          reverse: true,
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                answer.isNotEmpty
-                                    ? '= ${NumberFormat.decimalPattern().format(double.parse(answer))}'
-                                    : answer,
-                                style: GoogleFonts.archivo(
-                                  fontSize: answer.length > 9
-                                      ? 64 - (answer.length * 0.5)
-                                      : 64,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                    //ANSWER
+                    const SizedBox(height: 28),
+                    SizedBox(
+                      width: double.infinity,
+                      child: SingleChildScrollView(
+                        reverse: true,
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              answer.isNotEmpty
+                                  ? '= ${NumberFormat.decimalPattern().format(double.parse(answer))}'
+                                  : answer,
+                              style: GoogleFonts.archivo(
+                                fontSize: answer.length > 9
+                                    ? 64 - (answer.length * 0.5)
+                                    : 64,
+                                fontWeight: FontWeight.w600,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -129,17 +119,7 @@ class _CalcScreenState extends State<CalcScreen> {
                   horizontal: 14,
                   vertical: 8,
                 ),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.teal.shade50.withOpacity(0.2),
-                  ),
-                  child: getKeyboard(),
-                ),
+                child: getKeyboard(),
               ),
             ),
           ],
