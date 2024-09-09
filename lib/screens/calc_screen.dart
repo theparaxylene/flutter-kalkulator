@@ -100,8 +100,10 @@ class _CalcScreenState extends State<CalcScreen> {
                                 answer.isNotEmpty
                                     ? '= ${NumberFormat.decimalPattern().format(double.parse(answer))}'
                                     : answer,
-                                style: const TextStyle(
-                                  fontSize: 64,
+                                style: TextStyle(
+                                  fontSize: answer.length > 9
+                                      ? 64 - (answer.length * 0.5)
+                                      : 64,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
