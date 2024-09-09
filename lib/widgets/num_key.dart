@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class NumKey extends StatelessWidget {
   final String text;
@@ -34,7 +35,7 @@ class NumKey extends StatelessWidget {
                   )
                 : Text(
                     text,
-                    style: TextStyle(
+                    style: GoogleFonts.tomorrow(
                       fontSize: 24,
                       color: textColor,
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:intl/intl.dart';
 
@@ -60,7 +61,7 @@ class _CalcScreenState extends State<CalcScreen> {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.blueGrey.shade50,
+                    color: Colors.teal.shade50.withOpacity(0.2),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -76,7 +77,7 @@ class _CalcScreenState extends State<CalcScreen> {
                               Text(
                                 submitted + question,
                                 // 'question',
-                                style: TextStyle(
+                                style: GoogleFonts.archivo(
                                   fontSize: 36,
                                   color: Colors.grey.shade700,
                                 ),
@@ -100,7 +101,7 @@ class _CalcScreenState extends State<CalcScreen> {
                                 answer.isNotEmpty
                                     ? '= ${NumberFormat.decimalPattern().format(double.parse(answer))}'
                                     : answer,
-                                style: TextStyle(
+                                style: GoogleFonts.archivo(
                                   fontSize: answer.length > 9
                                       ? 64 - (answer.length * 0.5)
                                       : 64,
@@ -124,8 +125,21 @@ class _CalcScreenState extends State<CalcScreen> {
             Expanded(
               flex: 5,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: getKeyboard(),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 8,
+                ),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.teal.shade50.withOpacity(0.2),
+                  ),
+                  child: getKeyboard(),
+                ),
               ),
             ),
           ],
