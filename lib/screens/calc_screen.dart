@@ -14,9 +14,9 @@ class CalcScreen extends StatefulWidget {
 
 class _CalcScreenState extends State<CalcScreen> {
   final keys = [
-    'SC',
     'C',
     'DEL',
+    '%',
     '÷',
     '7',
     '8',
@@ -195,9 +195,11 @@ class _CalcScreenState extends State<CalcScreen> {
 
   void onKeyTap(int index) {
     setState(() {
-      // SCIENTIFIC
+      // C
       if (index == 0) {
-        // change to scientific keyboard
+        question = '';
+        submitted = '';
+        answer = '';
       }
 
       // =
@@ -205,15 +207,8 @@ class _CalcScreenState extends State<CalcScreen> {
         solve();
       }
 
-      // C
-      else if (index == 1) {
-        question = '';
-        submitted = '';
-        answer = '';
-      }
-
       // DEL
-      else if (index == 2) {
+      else if (index == 1) {
         if (question.isNotEmpty) {
           question = question.substring(0, question.length - 1);
         } else {
@@ -225,15 +220,15 @@ class _CalcScreenState extends State<CalcScreen> {
       }
 
       // %
-      // else if (index == 3) {
-      //   if (answer.isNotEmpty) {
-      //     question = answer;
-      //     answer = '';
-      //     submitted = '';
-      //   }
-      //   question = double.parse('${double.parse(question) / 100}')
-      //       .toStringAsFixed(question.length);
-      // }
+      else if (index == 2) {
+        if (answer.isNotEmpty) {
+          question = answer;
+          answer = '';
+          submitted = '';
+        }
+        question = double.parse('${double.parse(question) / 100}')
+            .toStringAsFixed(question.length);
+      }
 
       // Operators
       else if ((index + 1) % 4 == 0) {
@@ -277,17 +272,13 @@ class _CalcScreenState extends State<CalcScreen> {
 }
 
 Color getKeyColor(int index) {
-  if (index == 0) {
-    return Colors.indigo.shade900;
-  } else {
-    return Colors.indigo.shade100.withOpacity(0.25);
-  }
+  return Colors.indigo.shade100.withOpacity(0.25);
 }
 
 Color getTextColor(int index) {
-  if (index == 0) {
-    return Colors.indigo.shade100;
-  } else if (index < 3) {
+  if (index == 2) {
+    return Colors.indigo.shade900;
+  } else if (index < 2) {
     return Colors.red.shade400;
   } else if ((index + 1) % 4 == 0) {
     return Colors.indigo.shade900;
